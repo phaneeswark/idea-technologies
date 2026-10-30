@@ -2,7 +2,7 @@ import './styles.css';
 import { pages, searchIndex } from './pages.js';
 import { services, company, dir } from './data.js';
 import { icon } from './icons.js';
-import { checkEmail, emailLooksValid, INVALID_EMAIL } from './emailcheck.js';
+import { checkName, checkEmail, checkEmailFormat, checkPhone } from './validate.js';
 import { createNetworkBackground } from './background.js';
 
 const $ = (s, el = document) => el.querySelector(s);
@@ -288,6 +288,9 @@ function setFieldError(input, msg) {
   if (note) note.textContent = msg;
 }
 
+// Checks that run instantly, without the network. The email's domain is also looked up (checkEmail).
+const instantChecks = { name: checkName, email: checkEmailFormat, phone: checkPhone };
+
 function initContactForm(params) {
   const form = $('[data-contact-form]');
   const interest = params.get('interest');
@@ -311,17 +314,15 @@ function initContactForm(params) {
     e.preventDefault();
     errorBox.hidden = true;
     if (submitBtn.disabled) return;
-    const nameField = form.elements.name;
-    const emailField = form.elements.email;
-    setFieldError(nameField, nameField.value.trim() ? '' : 'Please enter your name.');
-    setFieldError(emailField, emailField.value.trim()
-      ? (emailLooksValid(emailField.value.trim()) ? '' : INVALID_EMAIL)
-      : 'Please enter your email address.');
-    if ($('.field.invalid', form)) { $('.field.invalid input', form).focus(); return; }
+    // Instant checks first, then the email domain lookup.
+    for (const [key, check] of Object.entries(instantChecks)) setFieldError(form.elements[key], check(form.elements[key].value));
+    const firstBad = $('.field.invalid input', form);
+    if (firstBad) { firstBad.focus(); return; }
 
     const label = submitBtn.innerHTML;
     submitBtn.disabled = true;
     submitBtn.textContent = 'Checking…';
+    const emailField = form.elements.email;
     const emailProblem = await checkEmail(emailField.value);
     if (emailProblem) {
       submitBtn.disabled = false;
@@ -395,7 +396,23 @@ function initContactForm(params) {
     success.hidden = true;
     form.querySelector('input[name="name"]').focus();
   });
-  $$('input, textarea', form).forEach((f) => f.addEventListener('input', () => setFieldError(f, '')));
+  // Check each field as soon as the visitor leaves it, and re-check while they fix it.
+  for (const [key, check] of Object.entries(instantChecks)) {
+    const input = form.elements[key];
+    input.addEventListener('blur', async () => {
+      if (!input.value.trim() && key !== 'phone' && !input.closest('.field').classList.contains('invalid')) return; // don't nag on an untouched empty field
+      const problem = check(input.value);
+      setFieldError(input, problem);
+      if (key === 'email' && !problem) {
+        const value = input.value;
+        const domainProblem = await checkEmail(value);
+        if (input.value === value && document.activeElement !== input) setFieldError(input, domainProblem);
+      }
+    });
+    input.addEventListener('input', () => {
+      if (input.closest('.field').classList.contains('invalid')) setFieldError(input, check(input.value));
+    });
+  }
 }
 
 /* ---------------- Global UI ---------------- */

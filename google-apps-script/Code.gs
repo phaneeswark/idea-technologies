@@ -30,6 +30,9 @@ function doPost(e) {
     const message = clean(d.message, 5000, true);
 
     if (!name) return reply({ ok: false, field: 'name', error: 'Please enter your name.' });
+    if (!/\p{L}/u.test(name)) return reply({ ok: false, field: 'name', error: 'Please enter a valid name.' });
+    const phoneProblem = checkPhone(phone);
+    if (phoneProblem) return reply({ ok: false, field: 'phone', error: phoneProblem });
     const emailProblem = checkEmail(email);
     if (emailProblem) return reply({ ok: false, field: 'email', error: emailProblem });
     if (!underDailyLimit()) {
@@ -94,7 +97,7 @@ function sendTestEmail() {
 
 // ---- Email address check (the website runs the same check first) ----
 
-// Throwaway inboxes and placeholder domains. Keep in step with src/emailcheck.js.
+// Throwaway inboxes and placeholder domains. Keep in step with src/validate.js.
 const BLOCKED_DOMAINS = [
   'example.com', 'example.org', 'example.net', 'test.com', 'domain.com', 'email.test',
   'mailinator.com', 'guerrillamail.com', 'guerrillamail.net', 'sharklasers.com', 'grr.la',
@@ -136,6 +139,25 @@ function domainReceivesMail(domain) {
     console.warn('MX lookup failed for ' + domain + ': ' + err);
     return null;
   }
+}
+
+// ---- Phone check (optional field; same rules as src/validate.js) ----
+// US: 10 digits with a real area code. International: + and country code, 8 to 15 digits.
+const INVALID_PHONE = 'Please enter a valid phone number, e.g. (512) 366-0019 or +91 98765 43210.';
+const US_NUMBER = /^[2-9]\d{2}[2-9]\d{6}$/;
+
+function checkPhone(value) {
+  if (!value) return '';
+  const main = value.replace(/\s*(?:ext\.?|x|#)\s*\d{1,6}$/i, '');
+  if (!/^\+?[\d\s().-]+$/.test(main)) return INVALID_PHONE;
+  const digits = main.replace(/\D/g, '');
+  if (/^(\d)\1+$/.test(digits)) return INVALID_PHONE;
+  if (main.charAt(0) === '+') {
+    if (digits.charAt(0) === '1') return digits.length === 11 && US_NUMBER.test(digits.slice(1)) ? '' : INVALID_PHONE;
+    return digits.length >= 8 && digits.length <= 15 ? '' : INVALID_PHONE;
+  }
+  const us = digits.length === 11 && digits.charAt(0) === '1' ? digits.slice(1) : digits;
+  return US_NUMBER.test(us) ? '' : INVALID_PHONE;
 }
 
 function reply(obj) {

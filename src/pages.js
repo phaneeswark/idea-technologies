@@ -418,7 +418,7 @@ export const pages = {
           </div>
           <div class="field-row">
             <label class="field"><span>Email *</span><input name="email" type="email" required autocomplete="email" maxlength="254" spellcheck="false"><small class="field-msg" aria-live="polite"></small></label>
-            <label class="field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel"></label>
+            <label class="field"><span>Phone</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" placeholder="(512) 555-0123"><small class="field-msg" aria-live="polite"></small></label>
           </div>
           <fieldset class="field">
             <legend>I am interested in</legend>
