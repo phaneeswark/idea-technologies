@@ -13,26 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Idea Technologies",
-    "legalName": "IDEA Technologies LLC",
-    "url": "https://ideatechnologies.net/",
-    "email": "info@ideatechnologies.net",
-    "telephone": "+1-512-366-0019",
-    "foundingDate": "2009",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "7703 N Lamar Blvd STE 128",
-      "addressLocality": "Austin",
-      "addressRegion": "TX",
-      "postalCode": "78752",
-      "addressCountry": "US"
-    }
-  }
-  </script>
+  <!-- Organization info for search engines: filled in from src/data.js at build time -->
+  <script type="application/ld+json">{{jsonLd}}</script>
 </head>
 <body>
   <div id="loader" aria-hidden="true">
@@ -101,13 +83,14 @@
       </div>
       <div>
         <h4>Contact</h4>
-        <p class="muted">7703 N Lamar Blvd STE 128<br>Austin, TX 78752</p>
-        <a href="mailto:info@ideatechnologies.net">info@ideatechnologies.net</a>
-        <a href="tel:+15123660019">+1 (512) 366-0019</a>
+        <!-- Filled in from src/data.js at build time -->
+        <p class="muted">{{street}}<br>{{city}}, {{state}} {{zip}}</p>
+        <a href="mailto:{{email}}">{{email}}</a>
+        <a href="{{phoneHref}}">{{phone}}</a>
       </div>
     </div>
     <div class="container footer-bottom">
-      <span>© <span id="year"></span> IDEA Technologies LLC. All rights reserved.</span>
+      <span>© <span id="year"></span> {{legalName}}. All rights reserved.</span>
       <span><a href="#/legal">Legal disclaimer</a> · Press <kbd>/</kbd> to search</span>
     </div>
   </footer>

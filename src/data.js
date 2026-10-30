@@ -1,18 +1,30 @@
 // All content below comes from the current ideatechnologies.net site.
 
+// ── Company details ──────────────────────────────────────────────
+// Edit these and run `npm run deploy`. Every page, the footer and the
+// search-engine info read from here, so this is the only place to change them.
 export const company = {
   name: 'Idea Technologies',
   legalName: 'IDEA Technologies LLC',
   founded: 2009,
-  address: '7703 N Lamar Blvd STE 128, Austin, TX 78752',
-  email: 'info@ideatechnologies.net',
-  phone: '+1 (512) 366-0019',
-  phoneHref: 'tel:+15123660019',
-  mapQuery: '7703 N Lamar Blvd STE 128, Austin, TX 78752',
-  certifications: ['SBA 8(a) Certified', 'HUB Certified', 'Texas DIR Vendor'],
-  activeContractors: 23,
   president: 'Rathu Jammula',
+  activeContractors: 23, // "Active contractors placed" on the homepage
+
+  email: 'info@ideatechnologies.net',
+  phone: '+1 (512) 366-0019', // include the +1 country code
+
+  street: '7703 N Lamar Blvd STE 128',
+  city: 'Austin',
+  state: 'TX',
+  zip: '78752',
+
+  certifications: ['SBA 8(a) Certified', 'HUB Certified', 'Texas DIR Vendor'],
 };
+
+// Worked out from the details above. No need to edit.
+company.address = `${company.street}, ${company.city}, ${company.state} ${company.zip}`;
+company.mapQuery = company.address;
+company.phoneHref = `tel:+${company.phone.replace(/\D/g, '')}`;
 
 export const intro = [
   'Idea Technologies is a renowned global technology and management firm at the forefront of IT innovation. With a laser focus on IT project development, project management, and IT lifecycle management, we offer cutting-edge software solutions, robust technical support, and comprehensive staffing and consulting services.',

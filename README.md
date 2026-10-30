@@ -61,7 +61,8 @@ The second command prints a public `https://….trycloudflare.com` link. It work
 
 ## Where to edit
 
-- Text and data: `src/data.js`
+- Company details (phone, email, address, president, contractor count): the `company` section at the top of `src/data.js`. This is the only place to change them; the pages, footer and search-engine info all read from it.
+- Other text and data (services, clients, logos, DIR roles): `src/data.js`
 - Page layouts: `src/pages.js`
 - 3D logo: `src/logo3d.js`
 - Styles and colors: `src/styles.css` (the tokens at the top)
