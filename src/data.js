@@ -7,8 +7,8 @@ export const company = {
   name: 'Idea Technologies',
   legalName: 'IDEA Technologies LLC',
   founded: 2009,
-  president: 'Rathu Jammula',
-  activeContractors: 23, // "Active contractors placed" on the homepage
+  president: 'Rathiah Jammula',
+  activeContractors: 23+, // "Active contractors placed" on the homepage
 
   email: 'info@ideatechnologies.net',
   phone: '+1 (512) 366-0019', // include the +1 country code
