@@ -40,7 +40,7 @@ The second command prints a public `https://….trycloudflare.com` link. It work
 
 | Route | Page |
 |---|---|
-| `#/` | Home: 3D logo hero, client name marquee, stats, services, client logo carousel, process, industries, DIR band |
+| `#/` | Home: 3D logo hero, stats, services, client logo carousel, process, industries, DIR band |
 | `#/company` | Overview, mission, vision, executive expertise, alliances |
 | `#/services` | Six services in detail |
 | `#/clients` | Industries, plus a client directory you can filter and search |

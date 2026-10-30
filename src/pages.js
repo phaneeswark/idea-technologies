@@ -31,15 +31,6 @@ const serviceCard = (s, i) => `
     <span class="card-link">Learn more ${icon('arrow')}</span>
   </button>`;
 
-const marquee = () => {
-  const items = clients.map((c) => `<span class="marquee-item"><b>${c.short}</b><small>${c.name}</small></span>`).join('');
-  return `
-  <section class="marquee-wrap" aria-label="Clients we have served">
-    <p class="marquee-label">Trusted by Texas agencies, cities and global enterprises</p>
-    <div class="marquee"><div class="marquee-track">${items}${items}</div></div>
-  </section>`;
-};
-
 const logoCarousel = () => `
   <section class="section logo-section">
     <div class="container">
@@ -102,8 +93,6 @@ export const pages = {
       </div>
       <a class="scroll-hint" href="#why" data-scroll aria-label="Scroll to content"><span></span></a>
     </section>
-
-    ${marquee()}
 
     <section class="section" id="why">
       <div class="container">
