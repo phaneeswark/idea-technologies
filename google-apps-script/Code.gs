@@ -7,11 +7,13 @@
  * Deploy > Manage deployments > Edit > Version: New version > Deploy.
  */
 
-// Where form messages are delivered.
-const TO = 'info@ideatechnologies.net';
+// Where form messages are delivered. Add or remove addresses as needed.
+const TO = ['info@ideatechnologies.net', 'itsac@ideatechnologies.net'];
 
-// Safety cap, so a spam flood can't use up your daily Gmail sending quota.
-const DAILY_LIMIT = 100;
+// Safety cap on form messages per day, so a spam flood can't use up your sending quota.
+// Google counts every recipient: a free Gmail account can email 100 recipients a day
+// (50 messages to 2 addresses); a Google Workspace account can email 1,500.
+const DAILY_LIMIT = 50;
 
 function doPost(e) {
   try {
@@ -54,7 +56,7 @@ function doPost(e) {
       '<p style="font:12px Arial,sans-serif;color:#889">Sent from the contact form on the Idea Technologies website. Reply to answer ' + esc(name) + ' directly.</p>';
 
     MailApp.sendEmail({
-      to: TO,
+      to: TO.join(','),
       replyTo: email,
       name: name.replace(/[<>"]/g, '') + ' via Idea Technologies website',
       subject: subject,
@@ -80,7 +82,7 @@ function sendTestEmail() {
     postData: {
       contents: JSON.stringify({
         name: 'Test Visitor',
-        email: TO,
+        email: TO[0],
         org: 'Setup test',
         interests: 'Other',
         message: 'If you can read this, the website contact form is set up correctly.',

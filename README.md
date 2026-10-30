@@ -69,13 +69,13 @@ The second command prints a public `https://….trycloudflare.com` link. It work
 
 ## Contact form
 
-Messages are emailed to info@ideatechnologies.net from your own Google Workspace account by a small Google Apps Script (`google-apps-script/Code.gs`). No outside service is involved. The visitor sees a "Thanks, your message was sent" confirmation, and pressing Reply in the email answers the visitor directly. Until it's set up, the form opens the visitor's email app instead.
+Messages are emailed to info@ and itsac@ideatechnologies.net (the `TO` list at the top of the script) from your own Google Workspace account by a small Google Apps Script (`google-apps-script/Code.gs`). No outside service is involved. The visitor sees a "Thanks, your message was sent" confirmation, and pressing Reply in the email answers the visitor directly. Until it's set up, the form opens the visitor's email app instead.
 
 ### One-time setup (about 5 minutes)
 
 1. Sign in to Google with your **Workspace** account and open https://script.google.com. Click **New project** and name it "Website contact form".
 2. Delete the sample code, paste in everything from `google-apps-script/Code.gs`, and click **Save** (the disk icon).
-3. Choose **sendTestEmail** in the function menu at the top, then click **Run**. Google asks for permission ("Review permissions", pick your account, then **Allow**). A test email should arrive at info@ideatechnologies.net.
+3. Choose **sendTestEmail** in the function menu at the top, then click **Run**. Google asks for permission ("Review permissions", pick your account, then **Allow**). A test email should arrive at both addresses.
 4. Click **Deploy > New deployment**. Click the gear icon and choose **Web app**. Set:
    - **Execute as:** Me
    - **Who has access:** Anyone
@@ -87,5 +87,5 @@ If "Anyone" isn't offered in step 4, your Workspace admin has limited sharing. A
 ### Good to know
 
 - Emails are sent from the Google account that deployed the script. They show as "*Visitor name* via Idea Technologies website".
-- Up to 100 form messages a day are accepted (`DAILY_LIMIT` in the script), well within Google's sending limits. A hidden spam trap blocks simple bots.
+- Up to 50 form messages a day are accepted (`DAILY_LIMIT` in the script). Google counts each recipient, so with two addresses that is 100 emails, the daily limit for a free Gmail account. On Google Workspace (1,500 a day) you can raise it. A hidden spam trap blocks simple bots.
 - To change the script later, edit it at script.google.com, then go to **Deploy > Manage deployments**, click the pencil icon, choose **Version: New version** and click **Deploy**. The URL stays the same.
