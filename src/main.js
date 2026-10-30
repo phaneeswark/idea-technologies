@@ -313,8 +313,8 @@ function initContactForm(params) {
     const picks = fd.getAll('interest');
     const subject = `Website inquiry${picks.length ? ' — ' + picks[0] : ''}`;
 
-    // No form key yet: open the visitor's email app instead.
-    if (!company.formKey) {
+    // No form address yet: open the visitor's email app instead.
+    if (!company.formEndpoint) {
       const lines = [`Name: ${val('name')}`];
       if (val('org')) lines.push(`Company/Agency: ${val('org')}`);
       lines.push(`Email: ${val('email')}`);
@@ -330,25 +330,21 @@ function initContactForm(params) {
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending…';
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
+      // Sent as plain text so the browser makes a simple request that Google Apps Script accepts.
+      const res = await fetch(company.formEndpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
-          access_key: company.formKey,
-          subject,
-          from_name: `${val('name')} via ${company.name} website`,
-          botcheck: fd.get('botcheck') ? true : '',
-          // These appear in the email, in this order. "email" also becomes the reply-to address.
           name: val('name'),
-          'Company / Agency': val('org') || '—',
+          org: val('org'),
           email: val('email'),
-          phone: val('phone') || '—',
-          'Interested in': picks.join(', ') || '—',
-          message: val('message') || '—',
+          phone: val('phone'),
+          interests: picks.join(', '),
+          message: val('message'),
+          botcheck: Boolean(fd.get('botcheck')),
         }),
       });
       const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.success) throw new Error(data.message || `HTTP ${res.status}`);
+      if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
 
       $('[data-sent-name]', form).textContent = val('name') ? `, ${val('name').split(/\s+/)[0]}` : '';
       $('[data-sent-email]', form).textContent = val('email');

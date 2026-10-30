@@ -430,7 +430,7 @@ export const pages = {
           <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
           <button class="btn btn-primary btn-lg" type="submit" data-submit>Send message ${icon('arrow')}</button>
           <p class="form-error" role="alert" hidden></p>
-          <p class="form-note muted">${company.formKey
+          <p class="form-note muted">${company.formEndpoint
             ? `Your message goes straight to our team at ${company.email}. We respond within one business day.`
             : `Submitting opens your email app with the message ready to send to ${company.email}.`}</p>
           <div class="form-success" role="status" hidden>

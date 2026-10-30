@@ -20,10 +20,11 @@ export const company = {
 
   certifications: ['SBA 8(a) Certified', 'HUB Certified', 'Texas DIR Vendor'],
 
-  // Contact form: messages are delivered to the email above by Web3Forms (web3forms.com).
-  // Paste the access key they emailed you between the quotes. It is safe to be public.
-  // Leave it empty and the form falls back to opening the visitor's email app.
-  formKey: '',
+  // Contact form: messages are emailed from your Google Workspace account by a small
+  // Google Apps Script (see "Contact form" in README.md). Paste the script's web app URL
+  // (it ends in /exec) between the quotes. Leave it empty and the form falls back to
+  // opening the visitor's email app.
+  formEndpoint: '',
 };
 
 // Worked out from the details above. No need to edit.
