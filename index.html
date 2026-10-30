@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Idea Technologies — IT Services, Staffing & Consulting · Austin, TX</title>
+  <meta name="description" content="Idea Technologies is an SBA 8(a) and HUB certified IT services company in Austin, Texas offering software development, IT staffing (Texas DIR ITSAC DIR-CPO-5540), cloud transformation, mobile apps, managed services and IT project management." />
+  <meta name="theme-color" content="#070B14" />
+  <meta property="og:title" content="Idea Technologies" />
+  <meta property="og:description" content="Pioneering IT excellence for government & enterprise." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Organization info for search engines: filled in from src/data.js at build time -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Idea Technologies","legalName":"IDEA Technologies LLC","url":"https://ideatechnologies.net/","email":"info@ideatechnologies.net","telephone":"+1 (512) 366-0019","foundingDate":"2009","address":{"@type":"PostalAddress","streetAddress":"7703 N Lamar Blvd STE 128","addressLocality":"Austin","addressRegion":"TX","postalCode":"78752","addressCountry":"US"}}</script>
+  <script type="module" crossorigin src="./assets/index-BR-aW19W.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CceHWPmk.css">
+</head>
+<body>
+  <div id="loader" aria-hidden="true">
+    <div class="loader-badge"><i>i</i>DEA</div>
+    <div class="loader-bar"><span></span></div>
+  </div>
+
+  <canvas id="bg-net" aria-hidden="true"></canvas>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-noise" aria-hidden="true"></div>
+  <div id="progress" aria-hidden="true"></div>
+
+  <a class="skip-link" href="#app">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#/" aria-label="Idea Technologies home">
+        <span class="brand-badge"><i>i</i>DEA</span>
+        <span class="brand-word">Technologies</span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="#/" data-route="home">Home</a>
+        <a href="#/company" data-route="company">Company</a>
+        <a href="#/services" data-route="services">Services</a>
+        <a href="#/clients" data-route="clients">Clients</a>
+        <a href="#/dir" data-route="dir">DIR Contract</a>
+        <a href="#/careers" data-route="careers">Careers</a>
+        <a class="btn btn-primary nav-cta" href="#/contact" data-route="contact">Contact</a>
+      </nav>
+      <div class="header-tools">
+        <button class="search-btn" data-palette-open aria-label="Search the site">
+          <span data-icon="search"></span><span class="search-label">Search</span><kbd class="kbd-hint">⌘K</kbd>
+        </button>
+        <button class="icon-btn" data-theme-toggle aria-label="Toggle theme"></button>
+        <button class="icon-btn nav-toggle" data-nav-toggle aria-label="Open menu" aria-expanded="false"></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#/" aria-label="Idea Technologies home">
+          <span class="brand-badge"><i>i</i>DEA</span>
+          <span class="brand-word">Technologies</span>
+        </a>
+        <p class="muted">A global technology and management firm focused on IT project development, project management and IT lifecycle management.</p>
+        <div class="footer-pills">
+          <span class="pill">SBA 8(a)</span><span class="pill">HUB Certified</span><span class="pill">DIR-CPO-5540</span>
+        </div>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="#/company">About us</a>
+        <a href="#/services">Services</a>
+        <a href="#/clients">Clients</a>
+        <a href="#/careers">Careers</a>
+      </div>
+      <div>
+        <h4>Contracts</h4>
+        <a href="#/dir">DIR ITSAC contract</a>
+        <a href="https://dir.texas.gov/contracts/dir-cpo-5540" target="_blank" rel="noopener">DIR-CPO-5540 on DIR</a>
+        <a href="https://dir.texas.gov/cooperative-contracts" target="_blank" rel="noopener">DIR Cooperative Contracts</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <!-- Filled in from src/data.js at build time -->
+        <p class="muted">7703 N Lamar Blvd STE 128<br>Austin, TX 78752</p>
+        <a href="mailto:info@ideatechnologies.net">info@ideatechnologies.net</a>
+        <a href="tel:+15123660019">+1 (512) 366-0019</a>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>© <span id="year"></span> IDEA Technologies LLC. All rights reserved.</span>
+      <span><a href="#/legal">Legal disclaimer</a> · Press <kbd>/</kbd> to search</span>
+    </div>
+  </footer>
+
+  <button id="to-top" aria-label="Back to top"><span data-icon="up"></span></button>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <dialog id="service-modal" class="modal" aria-label="Service details">
+    <button class="icon-btn modal-close" data-close aria-label="Close"><span data-icon="x"></span></button>
+    <div class="modal-body"></div>
+  </dialog>
+
+  <dialog id="palette" class="palette" aria-label="Search">
+    <div class="palette-input">
+      <span data-icon="search"></span>
+      <input id="palette-input" type="text" placeholder="Search pages, services, IT roles, clients…" role="combobox" aria-controls="palette-list" aria-expanded="true" autocomplete="off" />
+      <kbd>Esc</kbd>
+    </div>
+    <ul id="palette-list" role="listbox"></ul>
+    <div class="palette-foot"><span><kbd>↑</kbd><kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> open</span></div>
+  </dialog>
+
+</body>
+</html>
