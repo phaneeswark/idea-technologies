@@ -539,6 +539,8 @@ kbd {
 .footer-grid h4 { font-size: 14px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
 .footer-grid a:not(.brand) { display: block; color: var(--text); text-decoration: none; padding: 4px 0; font-size: 15px; opacity: .85; }
 .footer-grid a:not(.brand):hover { color: var(--brand-text); opacity: 1; }
+.footer-person { margin-bottom: 14px; font-size: 15px; font-weight: 600; color: var(--text); }
+.footer-person span { display: block; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
 .footer-brand p { margin: 18px 0; max-width: 360px; font-size: 15px; }
 .footer-pills { display: flex; gap: 8px; flex-wrap: wrap; }
 .footer-bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 22px 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
