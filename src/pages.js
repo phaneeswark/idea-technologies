@@ -110,7 +110,7 @@ export const pages = {
         <div class="stats">
           <div class="stat reveal"><span class="stat-num" data-count="${company.founded}" data-plain>0</span><span class="stat-label">Founded in Austin, TX</span></div>
           <div class="stat reveal"><span class="stat-num" data-count="${clients.length}" data-suffix="+">0</span><span class="stat-label">Public &amp; private clients</span></div>
-          <div class="stat reveal"><span class="stat-num" data-count="${company.activeContractors}">0</span><span class="stat-label">Active contractors placed</span></div>
+          <div class="stat reveal"><span class="stat-num" data-count="${parseInt(company.activeContractors, 10) || 0}" data-suffix="${String(company.activeContractors).replace(/^\d+/, '')}">0</span><span class="stat-label">Active contractors placed</span></div>
           <div class="stat reveal"><span class="stat-num" data-count="${dir.roles.length}">0</span><span class="stat-label">DIR IT role categories</span></div>
         </div>
 
