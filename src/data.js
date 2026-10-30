@@ -19,6 +19,11 @@ export const company = {
   zip: '78752',
 
   certifications: ['SBA 8(a) Certified', 'HUB Certified', 'Texas DIR Vendor'],
+
+  // Contact form: messages are delivered to the email above by Web3Forms (web3forms.com).
+  // Paste the access key they emailed you between the quotes. It is safe to be public.
+  // Leave it empty and the form falls back to opening the visitor's email app.
+  formKey: '',
 };
 
 // Worked out from the details above. No need to edit.

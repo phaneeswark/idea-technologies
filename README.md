@@ -69,4 +69,6 @@ The second command prints a public `https://….trycloudflare.com` link. It work
 
 ## Contact form
 
-The form opens the visitor's email app with the message pre-filled to info@ideatechnologies.net. If you'd rather receive submissions without email, point the submit handler in `src/main.js` (`initContactForm`) at a form service such as Formspree or your own API.
+Messages are sent straight to info@ideatechnologies.net by [Web3Forms](https://web3forms.com) (free, up to 250 messages a month). The visitor sees a "Thanks, your message was sent" confirmation, and you can reply directly to the email you receive.
+
+To turn it on, put the Web3Forms access key in `formKey` in `src/data.js` and push. The key is safe to be public. With no key, the form falls back to opening the visitor's email app.

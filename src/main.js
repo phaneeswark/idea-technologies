@@ -288,8 +288,18 @@ function initContactForm(params) {
     if (box) box.checked = true;
     form.message.value = `I'd like to discuss ${interest}.`;
   }
-  form.addEventListener('submit', (e) => {
+  const submitBtn = $('[data-submit]', form);
+  const errorBox = $('.form-error', form);
+  const success = $('.form-success', form);
+
+  const showError = (msg) => {
+    errorBox.innerHTML = msg;
+    errorBox.hidden = false;
+  };
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    errorBox.hidden = true;
     let ok = true;
     $$('[required]', form).forEach((f) => {
       const valid = f.value.trim() && (f.type !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value));
@@ -297,18 +307,68 @@ function initContactForm(params) {
       if (!valid) ok = false;
     });
     if (!ok) { toast('Please complete the required fields'); $('.invalid input', form)?.focus(); return; }
+
     const fd = new FormData(form);
+    const val = (k) => (fd.get(k) || '').toString().trim();
     const picks = fd.getAll('interest');
-    const lines = [`Name: ${fd.get('name')}`];
-    if (fd.get('org')) lines.push(`Company/Agency: ${fd.get('org')}`);
-    lines.push(`Email: ${fd.get('email')}`);
-    if (fd.get('phone')) lines.push(`Phone: ${fd.get('phone')}`);
-    if (picks.length) lines.push(`Interested in: ${picks.join(', ')}`);
-    lines.push('', fd.get('message') || '');
-    const body = lines.join('\n');
     const subject = `Website inquiry${picks.length ? ' — ' + picks[0] : ''}`;
-    window.location.href = `mailto:${company.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    toast('Opening your email app…');
+
+    // No form key yet: open the visitor's email app instead.
+    if (!company.formKey) {
+      const lines = [`Name: ${val('name')}`];
+      if (val('org')) lines.push(`Company/Agency: ${val('org')}`);
+      lines.push(`Email: ${val('email')}`);
+      if (val('phone')) lines.push(`Phone: ${val('phone')}`);
+      if (picks.length) lines.push(`Interested in: ${picks.join(', ')}`);
+      lines.push('', val('message'));
+      window.location.href = `mailto:${company.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+      toast('Opening your email app…');
+      return;
+    }
+
+    const label = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: company.formKey,
+          subject,
+          from_name: `${val('name')} via ${company.name} website`,
+          botcheck: fd.get('botcheck') ? true : '',
+          // These appear in the email, in this order. "email" also becomes the reply-to address.
+          name: val('name'),
+          'Company / Agency': val('org') || '—',
+          email: val('email'),
+          phone: val('phone') || '—',
+          'Interested in': picks.join(', ') || '—',
+          message: val('message') || '—',
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.success) throw new Error(data.message || `HTTP ${res.status}`);
+
+      $('[data-sent-name]', form).textContent = val('name') ? `, ${val('name').split(/\s+/)[0]}` : '';
+      $('[data-sent-email]', form).textContent = val('email');
+      success.hidden = false;
+      form.classList.add('is-sent');
+      form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      form.reset();
+    } catch (err) {
+      console.warn('Contact form failed:', err);
+      showError(`Sorry, your message couldn’t be sent. Please email us at <a href="mailto:${company.email}?subject=${encodeURIComponent(subject)}">${company.email}</a> or call <a href="${company.phoneHref}">${company.phone}</a>.`);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = label;
+    }
+  });
+
+  $('[data-send-another]', form).addEventListener('click', () => {
+    form.classList.remove('is-sent');
+    success.hidden = true;
+    form.querySelector('input[name="name"]').focus();
   });
   $$('input, textarea', form).forEach((f) => f.addEventListener('input', () => f.closest('.field')?.classList.remove('invalid')));
 }

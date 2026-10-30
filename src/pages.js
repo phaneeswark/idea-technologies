@@ -427,8 +427,18 @@ export const pages = {
             </div>
           </fieldset>
           <label class="field"><span>Your message</span><textarea name="message" rows="5" placeholder="Tell us about your project, timeline, or staffing needs…"></textarea></label>
-          <button class="btn btn-primary btn-lg" type="submit">Send message ${icon('arrow')}</button>
-          <p class="form-note muted">Submitting opens your email app with the message ready to send to ${company.email}.</p>
+          <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn btn-primary btn-lg" type="submit" data-submit>Send message ${icon('arrow')}</button>
+          <p class="form-error" role="alert" hidden></p>
+          <p class="form-note muted">${company.formKey
+            ? `Your message goes straight to our team at ${company.email}. We respond within one business day.`
+            : `Submitting opens your email app with the message ready to send to ${company.email}.`}</p>
+          <div class="form-success" role="status" hidden>
+            <span class="icon-tile">${icon('check')}</span>
+            <h3>Thanks<span data-sent-name></span>. Your message was sent.</h3>
+            <p class="muted">Our team will reply to <strong data-sent-email></strong> within one business day. For anything urgent, call <a href="${company.phoneHref}">${company.phone}</a>.</p>
+            <button class="btn btn-ghost" type="button" data-send-another>Send another message</button>
+          </div>
         </form>
         <div class="contact-side">
           <div class="card contact-item reveal"><span class="icon-tile">${icon('user')}</span><div><small>President</small><strong>${company.president}</strong></div></div>
