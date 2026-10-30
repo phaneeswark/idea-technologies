@@ -1,7 +1,7 @@
 // All content below comes from the current ideatechnologies.net site.
 
 // ── Company details ──────────────────────────────────────────────
-// Edit these and run `npm run deploy`. Every page, the footer and the
+// Edit these, then commit and push; the live site updates itself. Every page, the footer and the
 // search-engine info read from here, so this is the only place to change them.
 export const company = {
   name: 'Idea Technologies',

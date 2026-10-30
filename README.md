@@ -14,13 +14,13 @@ Upload the contents of `dist/` to any static host (your current web host, Netlif
 
 ## Live site (GitHub Pages)
 
-The site is hosted at **https://phaneeswark.github.io/idea-technologies/**. To publish changes, run:
+The site is hosted at **https://phaneeswark.github.io/idea-technologies/**. It publishes itself: every push to the `main` branch rebuilds the site and updates the live link within a couple of minutes.
 
 ```bash
-npm run deploy
+git add -A && git commit -m "Describe the change" && git push
 ```
 
-This builds the site and pushes it to the `gh-pages` branch; the live link updates about a minute later. Save your source changes with `git add -A && git commit -m "..." && git push`.
+To watch a publish, or see why one failed, open the **Actions** tab of the repository on GitHub. If a publish fails (for example, a typo in `src/data.js`), the live site keeps showing the last working version.
 
 ## Share a preview link (from this Mac)
 
