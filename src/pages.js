@@ -413,11 +413,11 @@ export const pages = {
       <div class="container contact-grid">
         <form class="card contact-form reveal" novalidate data-contact-form>
           <div class="field-row">
-            <label class="field"><span>Your name *</span><input name="name" required autocomplete="name"></label>
+            <label class="field"><span>Your name *</span><input name="name" required autocomplete="name" maxlength="120"><small class="field-msg" aria-live="polite"></small></label>
             <label class="field"><span>Company / Agency</span><input name="org" autocomplete="organization"></label>
           </div>
           <div class="field-row">
-            <label class="field"><span>Email *</span><input name="email" type="email" required autocomplete="email"></label>
+            <label class="field"><span>Email *</span><input name="email" type="email" required autocomplete="email" maxlength="254" spellcheck="false"><small class="field-msg" aria-live="polite"></small></label>
             <label class="field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel"></label>
           </div>
           <fieldset class="field">

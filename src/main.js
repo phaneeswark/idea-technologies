@@ -2,6 +2,7 @@ import './styles.css';
 import { pages, searchIndex } from './pages.js';
 import { services, company, dir } from './data.js';
 import { icon } from './icons.js';
+import { checkEmail, emailLooksValid, INVALID_EMAIL } from './emailcheck.js';
 import { createNetworkBackground } from './background.js';
 
 const $ = (s, el = document) => el.querySelector(s);
@@ -278,6 +279,15 @@ function initRoleSearch() {
   });
 }
 
+function setFieldError(input, msg) {
+  const field = input.closest('.field');
+  if (!field) return;
+  field.classList.toggle('invalid', Boolean(msg));
+  input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+  const note = $('.field-msg', field);
+  if (note) note.textContent = msg;
+}
+
 function initContactForm(params) {
   const form = $('[data-contact-form]');
   const interest = params.get('interest');
@@ -300,13 +310,26 @@ function initContactForm(params) {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     errorBox.hidden = true;
-    let ok = true;
-    $$('[required]', form).forEach((f) => {
-      const valid = f.value.trim() && (f.type !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value));
-      f.closest('.field').classList.toggle('invalid', !valid);
-      if (!valid) ok = false;
-    });
-    if (!ok) { toast('Please complete the required fields'); $('.invalid input', form)?.focus(); return; }
+    if (submitBtn.disabled) return;
+    const nameField = form.elements.name;
+    const emailField = form.elements.email;
+    setFieldError(nameField, nameField.value.trim() ? '' : 'Please enter your name.');
+    setFieldError(emailField, emailField.value.trim()
+      ? (emailLooksValid(emailField.value.trim()) ? '' : INVALID_EMAIL)
+      : 'Please enter your email address.');
+    if ($('.field.invalid', form)) { $('.field.invalid input', form).focus(); return; }
+
+    const label = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Checking…';
+    const emailProblem = await checkEmail(emailField.value);
+    if (emailProblem) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = label;
+      setFieldError(emailField, emailProblem);
+      emailField.focus();
+      return;
+    }
 
     const fd = new FormData(form);
     const val = (k) => (fd.get(k) || '').toString().trim();
@@ -321,13 +344,13 @@ function initContactForm(params) {
       if (val('phone')) lines.push(`Phone: ${val('phone')}`);
       if (picks.length) lines.push(`Interested in: ${picks.join(', ')}`);
       lines.push('', val('message'));
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = label;
       window.location.href = `mailto:${company.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
       toast('Opening your email app…');
       return;
     }
 
-    const label = submitBtn.innerHTML;
-    submitBtn.disabled = true;
     submitBtn.textContent = 'Sending…';
     try {
       // Sent as plain text so the browser makes a simple request that Google Apps Script accepts.
@@ -344,6 +367,12 @@ function initContactForm(params) {
         }),
       });
       const data = await res.json().catch(() => ({}));
+      if (data.field && form.elements[data.field]) {
+        // The server rejected a field (for example, an email that can't receive mail).
+        setFieldError(form.elements[data.field], data.error);
+        form.elements[data.field].focus();
+        return;
+      }
       if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
 
       $('[data-sent-name]', form).textContent = val('name') ? `, ${val('name').split(/\s+/)[0]}` : '';
@@ -366,7 +395,7 @@ function initContactForm(params) {
     success.hidden = true;
     form.querySelector('input[name="name"]').focus();
   });
-  $$('input, textarea', form).forEach((f) => f.addEventListener('input', () => f.closest('.field')?.classList.remove('invalid')));
+  $$('input, textarea', form).forEach((f) => f.addEventListener('input', () => setFieldError(f, '')));
 }
 
 /* ---------------- Global UI ---------------- */

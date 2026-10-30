@@ -504,7 +504,7 @@ kbd {
 /* contact */
 .contact-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 24px; align-items: start; }
 .contact-form { display: grid; gap: 18px; padding: clamp(22px, 4vw, 36px); }
-.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
 .field { display: grid; gap: 7px; border: 0; padding: 0; margin: 0; min-width: 0; }
 .field > span, .field legend { font-size: 14px; font-weight: 600; padding: 0; margin-bottom: 7px; }
 .field input, .field textarea {
@@ -513,6 +513,9 @@ kbd {
 }
 .field input:focus, .field textarea:focus { border-color: var(--brand); box-shadow: 0 0 0 4px rgba(249, 139, 58, .18); }
 .field.invalid input { border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239, 68, 68, .15); }
+.field-msg { display: none; margin-top: -1px; font-size: 13px; font-weight: 500; color: #f87171; }
+.field.invalid .field-msg:not(:empty) { display: block; }
+[data-theme="light"] .field-msg { color: #b91c1c; }
 .choice-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .choice input { position: absolute; opacity: 0; pointer-events: none; }
 .choice span { display: inline-block; padding: 9px 14px; border-radius: 999px; border: 1px solid var(--border-2); background: var(--surface-2); font-size: 14px; font-weight: 500; cursor: pointer; transition: .2s; }

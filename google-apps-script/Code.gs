@@ -29,9 +29,9 @@ function doPost(e) {
     const interests = clean(d.interests, 400);
     const message = clean(d.message, 5000, true);
 
-    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return reply({ ok: false, error: 'Please enter your name and a valid email address.' });
-    }
+    if (!name) return reply({ ok: false, field: 'name', error: 'Please enter your name.' });
+    const emailProblem = checkEmail(email);
+    if (emailProblem) return reply({ ok: false, field: 'email', error: emailProblem });
     if (!underDailyLimit()) {
       return reply({ ok: false, error: 'We received too many messages today.' });
     }
@@ -90,6 +90,52 @@ function sendTestEmail() {
     },
   });
   console.log(res.getContent());
+}
+
+// ---- Email address check (the website runs the same check first) ----
+
+// Throwaway inboxes and placeholder domains. Keep in step with src/emailcheck.js.
+const BLOCKED_DOMAINS = [
+  'example.com', 'example.org', 'example.net', 'test.com', 'domain.com', 'email.test',
+  'mailinator.com', 'guerrillamail.com', 'guerrillamail.net', 'sharklasers.com', 'grr.la',
+  '10minutemail.com', 'tempmail.com', 'temp-mail.org', 'tempmailo.com', 'tempail.com',
+  'yopmail.com', 'trashmail.com', 'getnada.com', 'dispostable.com', 'maildrop.cc',
+  'throwawaymail.com', 'fakeinbox.com', 'mailnesia.com', 'mintemail.com', 'emailondeck.com',
+  'moakt.com', 'mohmal.com', 'burnermail.io', 'mailcatch.com', 'spamgourmet.com',
+  'discard.email', 'mytemp.email', 'tempr.email', 'emailfake.com', 'fakemail.net',
+];
+const EMAIL_SYNTAX = /^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@([A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z]{2,24}$/;
+const INVALID_EMAIL = 'Please enter a valid email address.';
+
+// Returns '' when the email is fine, or a message for the visitor.
+function checkEmail(email) {
+  if (!email || email.length > 254 || !EMAIL_SYNTAX.test(email)) return INVALID_EMAIL;
+  const domain = email.split('@')[1].toLowerCase();
+  if (BLOCKED_DOMAINS.indexOf(domain) !== -1) return 'Please use your work or personal email, not a temporary one.';
+  if (domainReceivesMail(domain) === false) return INVALID_EMAIL + ' \u201c' + domain + '\u201d doesn\u2019t receive email.';
+  return '';
+}
+
+// true = domain has mail servers, false = it doesn't, null = couldn't check (let it through).
+function domainReceivesMail(domain) {
+  const cache = CacheService.getScriptCache();
+  const hit = cache.get('mx:' + domain);
+  if (hit) return hit === 'yes';
+  try {
+    const res = UrlFetchApp.fetch('https://dns.google/resolve?type=MX&name=' + encodeURIComponent(domain), { muteHttpExceptions: true });
+    if (res.getResponseCode() !== 200) return null;
+    const data = JSON.parse(res.getContentText());
+    let ok;
+    if (data.Status === 3) ok = false; // domain doesn't exist
+    else if (data.Status !== 0) return null;
+    // "0 ." is a "null MX": the domain says it never accepts email.
+    else ok = (data.Answer || []).some((a) => a.type === 15 && !/^\d+\s+\.?$/.test(String(a.data).trim()));
+    cache.put('mx:' + domain, ok ? 'yes' : 'no', 21600); // remember for 6 hours
+    return ok;
+  } catch (err) {
+    console.warn('MX lookup failed for ' + domain + ': ' + err);
+    return null;
+  }
 }
 
 function reply(obj) {
