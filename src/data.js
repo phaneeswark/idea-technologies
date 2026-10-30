@@ -24,7 +24,7 @@ export const company = {
   // Google Apps Script (see "Contact form" in README.md). Paste the script's web app URL
   // (it ends in /exec) between the quotes. Leave it empty and the form falls back to
   // opening the visitor's email app.
-  formEndpoint: '',
+  formEndpoint: 'https://script.google.com/macros/s/AKfycbxgx126TMDfdBSdCC092yR7oDxUDYBSVn2faKfL_FpNdrWWVkp5ASzd8SsyKIDhan0/exec',
 };
 
 // Worked out from the details above. No need to edit.
