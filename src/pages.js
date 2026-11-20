@@ -88,7 +88,7 @@ export const pages = {
         <p class="hero-sub reveal">Software development, IT staffing, cloud transformation and managed services — delivered from Austin, Texas with a strong presence across the United States and India.</p>
         <div class="hero-cta reveal">
           <a class="btn btn-primary btn-lg magnetic" href="#/contact">Start a project ${icon('arrow')}</a>
-          <a class="btn btn-ghost btn-lg" href="#/dir">${icon('file')} DIR-CPO-5540 Contract</a>
+          <a class="btn btn-ghost btn-lg" href="dir/">${icon('file')} DIR-CPO-5540 Contract</a>
         </div>
       </div>
       <a class="scroll-hint" href="#why" data-scroll aria-label="Scroll to content"><span></span></a>
@@ -171,7 +171,7 @@ export const pages = {
             <h2>Procure IT staff directly through <span class="grad">DIR-CPO-5540</span></h2>
             <p class="muted">Texas state agencies, public universities, school districts and local governments can engage our IT professionals on an hourly basis through the DIR IT Staffing Services (ITSAC) program.</p>
             <div class="hero-cta left">
-              <a class="btn btn-primary" href="#/dir">View contract details ${icon('arrow')}</a>
+              <a class="btn btn-primary" href="dir/">View contract details ${icon('arrow')}</a>
               <button class="btn btn-ghost" data-copy="${dir.contract}">${icon('copy')} Copy contract #</button>
             </div>
           </div>
@@ -309,75 +309,6 @@ export const pages = {
     `,
   },
 
-  dir: {
-    title: 'DIR ITSAC Contract DIR-CPO-5540 — Idea Technologies',
-    render: () => `
-    ${pageHero('Texas DIR · IT Staffing Services (ITSAC)', `Contract <span class="grad">${dir.contract}</span>`, 'IDEA Technologies LLC (ITL) is an approved vendor authorized to provide IT staffing services to State of Texas agencies and other eligible customers through the DIR Cooperative Contracts Program.', `
-      <div class="contract-card reveal">
-        <div><small>Contract number</small><strong>${dir.contract}</strong></div>
-        <div><small>Program</small><strong>DIR IT Staffing Services</strong></div>
-        <div><small>Basis</small><strong>Hourly staff augmentation</strong></div>
-        <div class="contract-actions">
-          <button class="btn btn-primary" data-copy="${dir.contract}">${icon('copy')} Copy</button>
-          <a class="btn btn-ghost" href="${dir.contractUrl}" target="_blank" rel="noopener">${icon('external')} View on DIR</a>
-        </div>
-      </div>`)}
-
-    <section class="section">
-      <div class="container split">
-        <div>
-          ${sectionHead('About the contract', 'Fast, compliant access to IT talent')}
-          <p class="reveal muted">IT Staffing Services contracts provide temporary IT staffing augmentation on a time (hourly) basis. Contracted staff render services and are compensated hourly.</p>
-          <p class="reveal muted">This contract vehicle allows Texas state agencies, public institutions of higher education, public school districts, and other eligible local government entities to work directly with IDEA Technologies LLC to procure IT staff augmentation services in accordance with DIR program guidelines.</p>
-          <p class="reveal muted">Founded in 2009 in Austin, ITL started with a modest team of contractors. Through strategic alliances and DIR vendorship, ITL has grown to ${company.activeContractors} active contractors engaged with state agencies and private organizations.</p>
-        </div>
-        <div>
-          <h3 class="reveal">How to order</h3>
-          <ol class="steps reveal">
-            <li><span>1</span><div><strong>Review the program</strong><p>See ordering procedures on the <a href="${dir.programUrl}" target="_blank" rel="noopener">DIR IT Staffing program</a> site and the <a href="${dir.coopUrl}" target="_blank" rel="noopener">DIR Cooperative Contracts</a> program.</p></div></li>
-            <li><span>2</span><div><strong>Contact ITL</strong><p>Reach ${dir.contact} for quotes, purchase orders and warranty information.</p></div></li>
-            <li><span>3</span><div><strong>Issue your PO</strong><p>Reference ${dir.contract} and we’ll match qualified professionals to your project.</p></div></li>
-          </ol>
-          <div class="card contact-mini reveal">
-            <strong>${dir.contact}</strong>
-            <span>${icon('pin')} ${company.address}</span>
-            <a href="mailto:${company.email}?subject=${encodeURIComponent(dir.contract + ' inquiry')}">${icon('mail')} ${company.email}</a>
-            <a href="${company.phoneHref}">${icon('call')} ${company.phone}</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-alt">
-      <div class="container">
-        ${sectionHead('Services offered', 'IT roles available under the contract', 'Including but not limited to:', true)}
-        <div class="toolbar center reveal">
-          <label class="search-field">${icon('search')}<input type="search" placeholder="Search roles…" data-role-search aria-label="Search roles"></label>
-        </div>
-        <div class="role-grid" data-role-grid>
-          ${dir.roles.map((r, i) => `<div class="role reveal" style="--d:${i * 30}ms" data-name="${r.toLowerCase()}">${icon('check')} ${r}</div>`).join('')}
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        ${sectionHead('Contract documents', 'Appendices & pricing', '', true)}
-        <div class="grid-3">
-          ${dir.docs.map((d, i) => `
-            <a class="card doc tilt reveal" style="--d:${i * 80}ms" href="${d.url}" target="_blank" rel="noopener">
-              <span class="card-glow"></span>
-              <span class="icon-tile">${icon('file')}</span>
-              <h4>${d.title}</h4>
-              <p>${d.note}</p>
-              <span class="card-link">Open PDF ${icon('external')}</span>
-            </a>`).join('')}
-        </div>
-      </div>
-    </section>
-    `,
-  },
-
   careers: {
     title: 'Careers — Idea Technologies',
     render: () => `
@@ -483,11 +414,11 @@ export function searchIndex() {
   return [
     ...[
       ['Home', '#/', 'Page'], ['Company', '#/company', 'Page'], ['Services', '#/services', 'Page'],
-      ['Clients', '#/clients', 'Page'], ['DIR Contract DIR-CPO-5540', '#/dir', 'Page'], ['Careers', '#/careers', 'Page'],
+      ['Clients', '#/clients', 'Page'], ['DIR Contract DIR-CPO-5540', 'dir/', 'Page'], ['Careers', '#/careers', 'Page'],
       ['Contact', '#/contact', 'Page'], ['Legal disclaimer', '#/legal', 'Page'],
     ].map(([label, href, kind]) => ({ label, href, kind, icon: 'arrow' })),
     ...services.map((s) => ({ label: s.title, href: `#/services#svc-${s.id}`, kind: 'Service', icon: s.icon })),
-    ...dir.roles.map((r) => ({ label: r, href: '#/dir', kind: 'IT Role', icon: 'briefcase' })),
+    ...dir.roles.map((r) => ({ label: r, href: 'dir/', kind: 'IT Role', icon: 'briefcase' })),
     ...clients.map((c) => ({ label: c.name, href: '#/clients', kind: 'Client', icon: 'landmark' })),
     ...dir.docs.map((d) => ({ label: d.title, href: d.url, kind: 'Document', icon: 'file', external: true })),
     { label: 'Toggle light / dark theme', action: 'theme', kind: 'Action', icon: 'moon' },

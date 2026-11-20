@@ -1,10 +1,11 @@
 import { defineConfig } from 'vite';
-import { company } from './src/data.js';
+import { fileURLToPath } from 'node:url';
+import { company, dir } from './src/data.js';
 
 const escapeHtml = (v) =>
   String(v).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
-// Fills the {{...}} placeholders in index.html (footer, search-engine info)
+// Fills the {{...}} placeholders in the HTML pages (footer, search-engine info, DIR page)
 // from the company details in src/data.js, so they are edited in one place.
 function companyDetails() {
   const jsonLd = JSON.stringify({
@@ -29,10 +30,13 @@ function companyDetails() {
   return {
     name: 'company-details',
     transformIndexHtml(html) {
-      return html.replace(/\{\{(\w+)\}\}/g, (match, key) => {
+      return html.replace(/\{\{([\w.]+)\}\}/g, (match, key) => {
         if (key === 'jsonLd') return jsonLd;
-        if (!(key in company)) throw new Error(`index.html uses {{${key}}}, which is not in company (src/data.js)`);
-        return escapeHtml(company[key]);
+        // DIR page: the role list from src/data.js, one "• role" per line.
+        if (key === 'dir.rolesList') return dir.roles.map((r) => `• ${escapeHtml(r)}`).join('<br>');
+        const [source, field] = key.startsWith('dir.') ? [dir, key.slice(4)] : [company, key];
+        if (!(field in source)) throw new Error(`An HTML page uses {{${key}}}, which is not in src/data.js`);
+        return escapeHtml(source[field]);
       });
     },
   };
@@ -43,5 +47,14 @@ export default defineConfig({
   base: './',
   plugins: [companyDetails()],
   // The Three.js 3D logo chunk is lazy-loaded, so a larger chunk is expected.
-  build: { chunkSizeWarningLimit: 800 },
+  build: {
+    chunkSizeWarningLimit: 800,
+    // Two pages: the main site, and the DIR contract page at /dir/.
+    rollupOptions: {
+      input: {
+        main: fileURLToPath(new URL('./index.html', import.meta.url)),
+        dir: fileURLToPath(new URL('./dir/index.html', import.meta.url)),
+      },
+    },
+  },
 });

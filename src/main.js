@@ -61,7 +61,7 @@ async function copyText(text) {
 /* ---------------- Router ---------------- */
 const routes = {
   '/': 'home', '/company': 'company', '/about': 'company', '/services': 'services', '/clients': 'clients',
-  '/dir': 'dir', '/careers': 'careers', '/contact': 'contact', '/legal': 'legal',
+  '/careers': 'careers', '/contact': 'contact', '/legal': 'legal',
 };
 function parseHash() {
   const raw = location.hash.replace(/^#/, '') || '/';
@@ -74,6 +74,7 @@ let firstRender = true;
 const pageCleanups = []; // run when leaving a page (timers, listeners)
 async function render() {
   const { path, anchor, params } = parseHash();
+  if (path === '/dir') { location.replace('dir/'); return; } // the DIR page is its own page now
   const key = routes[path] || 'notFound';
   const page = pages[key];
 
@@ -121,7 +122,6 @@ function initPage(key, params) {
     });
   }
   if (key === 'clients') initClientFilter();
-  if (key === 'dir') initRoleSearch();
   if (key === 'contact') initContactForm(params);
 }
 
@@ -269,14 +269,6 @@ function initClientFilter() {
     filter = t.dataset.filter; apply();
   }));
   $('[data-client-search]').addEventListener('input', (e) => { q = e.target.value.trim().toLowerCase(); apply(); });
-}
-
-function initRoleSearch() {
-  const roles = $$('[data-role-grid] .role');
-  $('[data-role-search]').addEventListener('input', (e) => {
-    const q = e.target.value.trim().toLowerCase();
-    roles.forEach((r) => { r.hidden = !r.dataset.name.includes(q); });
-  });
 }
 
 function setFieldError(input, msg) {

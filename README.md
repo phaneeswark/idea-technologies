@@ -44,7 +44,7 @@ The second command prints a public `https://….trycloudflare.com` link. It work
 | `#/company` | Overview, mission, vision, executive expertise, alliances |
 | `#/services` | Six services in detail |
 | `#/clients` | Industries, plus a client directory you can filter and search |
-| `#/dir` | DIR-CPO-5540 contract: copy the contract number, search roles, PDF appendices, how to order |
+| `dir/` | DIR-CPO-5540 contract page, a separate page that keeps the original site's DIR layout and colours with the new header (`dir/index.html`, `dir/dir.css`). Its contact details and role list come from `src/data.js`. The old `#/dir` link redirects here. |
 | `#/careers` | Disciplines with one-click email applications |
 | `#/contact` | Validated form (opens the visitor's email app), map, contact cards |
 | `#/legal` | Legal disclaimer |
