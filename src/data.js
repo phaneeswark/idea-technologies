@@ -5,7 +5,8 @@
 //  and the search-engine info read from here.
 //
 //  Not in this file: the email addresses that receive contact form messages.
-//  They're in the Google Apps Script ("TO" at the top), at script.google.com.
+//  They are in the Google Apps Script ("TO" at the top), at script.google.com.
+//  Full guide: docs/where-to-change-things.md and docs/contact-form-emails.md
 // ═════════════════════════════════════════════════════════════════════
 
 export const company = {

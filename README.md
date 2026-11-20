@@ -46,7 +46,7 @@ The second command prints a public `https://….trycloudflare.com` link. It work
 | `#/clients` | Industries, plus a client directory you can filter and search |
 | `dir/` | DIR-CPO-5540 contract page, a separate page that keeps the original site's DIR layout and colours with the new header (`dir/index.html`, `dir/dir.css`). Its contact details and role list come from `src/data.js`. The old `#/dir` link redirects here. |
 | `#/careers` | Disciplines with one-click email applications |
-| `#/contact` | Validated form (opens the visitor's email app), map, contact cards |
+| `#/contact` | Contact form that emails info@ and itsac@ directly (checks name, email and phone), map, contact cards |
 | `#/legal` | Legal disclaimer |
 
 ## Features
@@ -61,47 +61,7 @@ The second command prints a public `https://….trycloudflare.com` link. It work
 
 ## Where to edit
 
-**Company details: one place.** Open `src/data.js`. The "WEBSITE SETTINGS" section at the top holds everything that changes:
+- **[docs/where-to-change-things.md](docs/where-to-change-things.md):** what to edit for every kind of change (phone, address, names, DIR details, services, clients, logos, layout), how to publish, and how to check it went live.
+- **[docs/contact-form-emails.md](docs/contact-form-emails.md):** how the contact form sends email through a Google Apps Script, how it was set up, how to change recipients and limits, and troubleshooting.
 
-| Setting | Examples |
-|---|---|
-| Names | company name, legal name, president, DIR contact name |
-| Contact | email, phone |
-| Address | street, city, state, ZIP |
-| Facts | year founded, active contractors, certifications, US & India presence |
-| DIR contract | contract number, DIR web links, appendix PDF links, IT roles |
-| Contact form | the Google Apps Script URL |
-
-Every page reads from these settings: the main site, the DIR page, the footer, page titles and the search-engine info. Change a value, commit and push, and it updates everywhere.
-
-The one exception is where contact form messages are delivered (info@ and itsac@). That list lives in the Google Apps Script (`TO` at the top), at script.google.com.
-
-Other things:
-- Services, clients, client logos and other text: further down in `src/data.js`
-- Page layouts: `src/pages.js` (main site), `dir/index.html` (DIR page)
-- 3D logo: `src/logo3d.js`
-- Styles and colours: `src/styles.css` (the tokens at the top), `dir/dir.css`
-
-## Contact form
-
-Messages are emailed to info@ and itsac@ideatechnologies.net (the `TO` list at the top of the script) from your own Google Workspace account by a small Google Apps Script (`google-apps-script/Code.gs`). No outside service is involved. The visitor sees a "Thanks, your message was sent" confirmation, and pressing Reply in the email answers the visitor directly. Until it's set up, the form opens the visitor's email app instead.
-
-### One-time setup (about 5 minutes)
-
-1. Sign in to Google with your **Workspace** account and open https://script.google.com. Click **New project** and name it "Website contact form".
-2. Delete the sample code, paste in everything from `google-apps-script/Code.gs`, and click **Save** (the disk icon).
-3. Choose **sendTestEmail** in the function menu at the top, then click **Run**. Google asks for permission ("Review permissions", pick your account, then **Allow**). A test email should arrive at both addresses.
-4. Click **Deploy > New deployment**. Click the gear icon and choose **Web app**. Set:
-   - **Execute as:** Me
-   - **Who has access:** Anyone
-5. Click **Deploy** and copy the **Web app URL** (it ends in `/exec`).
-6. Paste that URL into `formEndpoint` in `src/data.js`, then commit and push.
-
-If "Anyone" isn't offered in step 4, your Workspace admin has limited sharing. Ask them to allow web apps to be shared outside the organization in the Admin console, under Apps > Google Workspace > Drive and Docs > Sharing settings.
-
-### Good to know
-
-- Emails are sent from the Google account that deployed the script. They show as "*Visitor name* via Idea Technologies website".
-- Email addresses are checked before anything is sent: they must be written correctly, can't be a throwaway inbox (the `BLOCKED_DOMAINS` list), and their domain must actually receive email. Visitors see "Please enter a valid email address" under the email box. Phone numbers are optional, but if entered must be a real US number (10 digits) or an international number starting with + and the country code. Each field is checked as soon as the visitor leaves it. The checks run in the browser (`src/validate.js`) and again in the script, so it can't be skipped. It can't tell whether a specific mailbox exists at a real domain (for example, a made-up name at gmail.com).
-- Up to 50 form messages a day are accepted (`DAILY_LIMIT` in the script). Google counts each recipient, so with two addresses that is 100 emails, the daily limit for a free Gmail account. On Google Workspace (1,500 a day) you can raise it. A hidden spam trap blocks simple bots.
-- To change the script later, edit it at script.google.com, then go to **Deploy > Manage deployments**, click the pencil icon, choose **Version: New version** and click **Deploy**. The URL stays the same.
+In short: company details (names, phone, email, address, DIR contract) are all in the **WEBSITE SETTINGS** section at the top of `src/data.js`. Who receives contact form emails is set in the Google Apps Script at script.google.com.

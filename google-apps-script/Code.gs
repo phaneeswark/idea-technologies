@@ -2,8 +2,8 @@
  * Idea Technologies website: contact form handler (Google Apps Script).
  *
  * The website sends each form submission here, and this script emails it
- * from your Google Workspace account. Setup steps are in the README
- * ("Contact form"). After changing this file, redeploy:
+ * from your Google Workspace account. Setup steps and how to change things:
+ * docs/contact-form-emails.md. After changing this file, redeploy:
  * Deploy > Manage deployments > Edit > Version: New version > Deploy.
  */
 
