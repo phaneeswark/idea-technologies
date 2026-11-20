@@ -75,7 +75,7 @@ const ctaBand = () => `
 
 export const pages = {
   home: {
-    title: 'Idea Technologies — IT Services, Staffing & Consulting · Austin, TX',
+    title: `${company.name} — IT Services, Staffing & Consulting · ${company.city}, ${company.state}`,
     render: () => `
     <section class="hero">
       <div class="hero-aurora" aria-hidden="true"></div>
@@ -83,12 +83,12 @@ export const pages = {
         <div class="pill-row reveal">
           ${company.certifications.map((c) => `<span class="pill">${icon('award')} ${c}</span>`).join('')}
         </div>
-        <div class="hero-stage" data-logo3d aria-label="3D Idea Technologies logo" role="img"></div>
+        <div class="hero-stage" data-logo3d aria-label="3D ${company.name} logo" role="img"></div>
         <h1 class="hero-title reveal">Pioneering <span class="grad">IT excellence</span><br class="br-lg"> for government &amp; enterprise.</h1>
-        <p class="hero-sub reveal">Software development, IT staffing, cloud transformation and managed services — delivered from Austin, Texas with a strong presence across the United States and India.</p>
+        <p class="hero-sub reveal">Software development, IT staffing, cloud transformation and managed services — delivered from ${company.city}, ${company.stateName} with a strong presence across ${company.presence}.</p>
         <div class="hero-cta reveal">
           <a class="btn btn-primary btn-lg magnetic" href="#/contact">Start a project ${icon('arrow')}</a>
-          <a class="btn btn-ghost btn-lg" href="dir/">${icon('file')} DIR-CPO-5540 Contract</a>
+          <a class="btn btn-ghost btn-lg" href="dir/">${icon('file')} ${dir.contract} Contract</a>
         </div>
       </div>
       <a class="scroll-hint" href="#why" data-scroll aria-label="Scroll to content"><span></span></a>
@@ -97,7 +97,7 @@ export const pages = {
     <section class="section" id="why">
       <div class="container">
         <div class="stats">
-          <div class="stat reveal"><span class="stat-num" data-count="${company.founded}" data-plain>0</span><span class="stat-label">Founded in Austin, TX</span></div>
+          <div class="stat reveal"><span class="stat-num" data-count="${company.founded}" data-plain>0</span><span class="stat-label">Founded in ${company.city}, ${company.state}</span></div>
           <div class="stat reveal"><span class="stat-num" data-count="${clients.length}" data-suffix="+">0</span><span class="stat-label">Public &amp; private clients</span></div>
           <div class="stat reveal"><span class="stat-num" data-count="${parseInt(company.activeContractors, 10) || 0}" data-suffix="${String(company.activeContractors).replace(/^\d+/, '')}">0</span><span class="stat-label">Active contractors placed</span></div>
           <div class="stat reveal"><span class="stat-num" data-count="${dir.roles.length}">0</span><span class="stat-label">DIR IT role categories</span></div>
@@ -111,9 +111,9 @@ export const pages = {
           </div>
           <div class="feature-grid">
             ${[
-              ['award', 'SBA 8(a) & HUB Certified', 'Certified small business partner for state and federal procurement.'],
-              ['landmark', 'Texas DIR Vendor', 'Approved ITSAC vendor under contract DIR-CPO-5540.'],
-              ['globe', 'US & India Presence', 'Onshore delivery with global scale and expertise.'],
+              ['award', company.certifiedAmp, 'Certified small business partner for state and federal procurement.'],
+              ['landmark', 'Texas DIR Vendor', `Approved ITSAC vendor under contract ${dir.contract}.`],
+              ['globe', `${company.presenceShort} Presence`, 'Onshore delivery with global scale and expertise.'],
               ['refresh', 'End-to-End Delivery', 'From consulting and strategy to integration and management.'],
             ].map(([ic, t, d], i) => `
               <div class="card feature reveal" style="--d:${i * 80}ms">
@@ -168,7 +168,7 @@ export const pages = {
         <div class="dir-band reveal">
           <div class="dir-band-text">
             <span class="eyebrow">Texas DIR Cooperative Contracts</span>
-            <h2>Procure IT staff directly through <span class="grad">DIR-CPO-5540</span></h2>
+            <h2>Procure IT staff directly through <span class="grad">${dir.contract}</span></h2>
             <p class="muted">Texas state agencies, public universities, school districts and local governments can engage our IT professionals on an hourly basis through the DIR IT Staffing Services (ITSAC) program.</p>
             <div class="hero-cta left">
               <a class="btn btn-primary" href="dir/">View contract details ${icon('arrow')}</a>
@@ -187,15 +187,15 @@ export const pages = {
   },
 
   company: {
-    title: 'Company — Idea Technologies',
+    title: `Company — ${company.name}`,
     render: () => `
-    ${pageHero('Our company', 'Empowering businesses with <span class="grad">cutting-edge IT</span>', 'A software services consulting company with a strong presence in the United States and India, offering services across the entire software life cycle.')}
+    ${pageHero('Our company', 'Empowering businesses with <span class="grad">cutting-edge IT</span>', `A software services consulting company with a strong presence in ${company.presence}, offering services across the entire software life cycle.`)}
 
     <section class="section">
       <div class="container split">
         <div>
           ${sectionHead('Overview', 'Who we are')}
-          <p class="reveal muted">Idea Technologies is an SBA 8(a) and HUB Certified company based in Austin, Texas, and one of the rapidly growing IT services companies. We provide IT services in Application Development, IT Managed Services, IT Staffing, and Digital and Cloud Transformations.</p>
+          <p class="reveal muted">${company.name} is an ${company.certifiedAnd} company based in ${company.city}, ${company.stateName}, and one of the rapidly growing IT services companies. We provide IT services in Application Development, IT Managed Services, IT Staffing, and Digital and Cloud Transformations.</p>
           <p class="reveal muted">Our top priority is customer satisfaction. Our team works diligently to help you succeed across all facets of your business — meeting your objectives within set timelines — and we research ahead to anticipate your future requirements, not just your immediate needs.</p>
           <p class="reveal muted">We offer both turn-key project execution and consulting services encompassing business strategy, solution design and development, database design, database administration, quality assurance, and application support.</p>
         </div>
@@ -227,7 +227,7 @@ export const pages = {
     <section class="section">
       <div class="container">
         <div class="grid-3">
-          <div class="card info-card tilt reveal"><span class="card-glow"></span><span class="icon-tile">${icon('handshake')}</span><h3>Alliances</h3><p>We partner with Solution Partners who incorporate Idea Technologies’ solutions into their offerings — driving cost efficiencies, sharing industry insight, and delivering solutions tailored to each client.</p></div>
+          <div class="card info-card tilt reveal"><span class="card-glow"></span><span class="icon-tile">${icon('handshake')}</span><h3>Alliances</h3><p>We partner with Solution Partners who incorporate ${company.name}’ solutions into their offerings — driving cost efficiencies, sharing industry insight, and delivering solutions tailored to each client.</p></div>
           <div class="card info-card tilt reveal" style="--d:80ms"><span class="card-glow"></span><span class="icon-tile">${icon('briefcase')}</span><h3>Careers</h3><p>If you’re looking to build a great career and desire to learn and to lead, you have come to the right place.</p><a class="card-link" href="#/careers">Explore careers ${icon('arrow')}</a></div>
           <div class="card info-card tilt reveal" style="--d:160ms"><span class="card-glow"></span><span class="icon-tile">${icon('users')}</span><h3>Clients</h3><p>We serve government, energy, manufacturing, information technology and financial organizations.</p><a class="card-link" href="#/clients">See our clients ${icon('arrow')}</a></div>
         </div>
@@ -238,7 +238,7 @@ export const pages = {
   },
 
   services: {
-    title: 'Services — Idea Technologies',
+    title: `Services — ${company.name}`,
     render: () => `
     ${pageHero('Services', 'Technology services across the <span class="grad">entire lifecycle</span>', 'Software and application development, IT infrastructure, database support, management and IT consulting for state & local government and private/public enterprises.')}
     <section class="section">
@@ -271,7 +271,7 @@ export const pages = {
   },
 
   clients: {
-    title: 'Clients — Idea Technologies',
+    title: `Clients — ${company.name}`,
     render: () => `
     ${pageHero('Our clients', 'Serving those who <span class="grad">serve millions</span>', 'From Texas state agencies and city governments to global technology leaders.')}
     <section class="section">
@@ -310,7 +310,7 @@ export const pages = {
   },
 
   careers: {
-    title: 'Careers — Idea Technologies',
+    title: `Careers — ${company.name}`,
     render: () => `
     ${pageHero('Careers', 'Build a career where you <span class="grad">learn and lead</span>', 'If you’re looking to build a great career and desire to learn and to lead, you have come to the right place — whatever your career aspirations.', `<div class="hero-cta left reveal"><a class="btn btn-primary btn-lg" href="mailto:${company.email}?subject=Career%20inquiry">${icon('mail')} Send your resume</a></div>`)}
     <section class="section">
@@ -319,7 +319,7 @@ export const pages = {
           ${[
             ['landmark', 'Public-sector impact', 'Work on systems used by Texas state agencies, cities and the communities they serve.'],
             ['sparkle', 'Modern & legacy tech', 'From cloud and mobile to Java EE, .NET and mainframe — broaden your toolkit.'],
-            ['users', 'Grow with us', 'Join a rapidly growing, certified IT services company headquartered in Austin.'],
+            ['users', 'Grow with us', `Join a rapidly growing, certified IT services company headquartered in ${company.city}.`],
           ].map(([ic, t, d], i) => `<div class="card info-card tilt reveal" style="--d:${i * 80}ms"><span class="card-glow"></span><span class="icon-tile">${icon(ic)}</span><h3>${t}</h3><p>${d}</p></div>`).join('')}
         </div>
       </div>
@@ -337,9 +337,9 @@ export const pages = {
   },
 
   contact: {
-    title: 'Contact — Idea Technologies',
+    title: `Contact — ${company.name}`,
     render: () => `
-    ${pageHero('Contact us', 'Let’s build what’s <span class="grad">next</span>', 'Corporate office in Austin, Texas. Tell us what you need and the right person will get back to you.')}
+    ${pageHero('Contact us', 'Let’s build what’s <span class="grad">next</span>', `Corporate office in ${company.city}, ${company.stateName}. Tell us what you need and the right person will get back to you.`)}
     <section class="section">
       <div class="container contact-grid">
         <form class="card contact-form reveal" novalidate data-contact-form>
@@ -377,7 +377,7 @@ export const pages = {
           <a class="card contact-item reveal" href="mailto:${company.email}"><span class="icon-tile">${icon('mail')}</span><div><small>Email</small><strong>${company.email}</strong></div></a>
           <a class="card contact-item reveal" href="https://maps.google.com/?q=${encodeURIComponent(company.mapQuery)}" target="_blank" rel="noopener"><span class="icon-tile">${icon('pin')}</span><div><small>Corporate office</small><strong>${company.address}</strong></div></a>
           <div class="map reveal">
-            <iframe title="Idea Technologies office map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            <iframe title="${company.name} office map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
               src="https://maps.google.com/maps?q=${encodeURIComponent(company.mapQuery)}&z=15&output=embed"></iframe>
           </div>
         </div>
@@ -387,14 +387,14 @@ export const pages = {
   },
 
   legal: {
-    title: 'Legal — Idea Technologies',
+    title: `Legal — ${company.name}`,
     render: () => `
     ${pageHero('Legal', 'Legal disclaimer', '')}
     <section class="section tight">
       <div class="container prose">
-        <p>All trademarks, service marks, and trade names are proprietary to Idea Technologies or other respective owners which have granted Idea Technologies the right and license to use such marks. While Idea Technologies uses reasonable efforts to include accurate and up-to-date information on the Site, Idea Technologies makes no warranties or representations as to its accuracy. Idea Technologies assumes no liability or responsibility for any errors or representations in the content of this Site.</p>
-        <p>The materials on this site are provided “as is” without warranties of any kind either express or implied. To the fullest extent possible pursuant to the applicable law, Idea Technologies disclaims all warranties, expressed or implied, including, but not limited to, implied warranties of merchantability, fitness for a particular purpose, non-infringement or other violation of rights. Under no circumstances, including, but not limited to, negligence, shall Idea Technologies be liable for any direct, indirect, special, incidental or consequential damages, including, but not limited to, loss of data or profit, arising out of the use, or the inability to use, the materials on this site, even if Idea Technologies or an Idea Technologies authorized representative has been advised of the possibility of such damages.</p>
-        <p>All text, images, graphics, animation, videos, music, sounds and other materials on this site are subject to the copyrights and other intellectual property rights of Idea Technologies, its affiliated companies and its licensors.</p>
+        <p>All trademarks, service marks, and trade names are proprietary to ${company.name} or other respective owners which have granted ${company.name} the right and license to use such marks. While ${company.name} uses reasonable efforts to include accurate and up-to-date information on the Site, ${company.name} makes no warranties or representations as to its accuracy. ${company.name} assumes no liability or responsibility for any errors or representations in the content of this Site.</p>
+        <p>The materials on this site are provided “as is” without warranties of any kind either express or implied. To the fullest extent possible pursuant to the applicable law, ${company.name} disclaims all warranties, expressed or implied, including, but not limited to, implied warranties of merchantability, fitness for a particular purpose, non-infringement or other violation of rights. Under no circumstances, including, but not limited to, negligence, shall ${company.name} be liable for any direct, indirect, special, incidental or consequential damages, including, but not limited to, loss of data or profit, arising out of the use, or the inability to use, the materials on this site, even if ${company.name} or an ${company.name} authorized representative has been advised of the possibility of such damages.</p>
+        <p>All text, images, graphics, animation, videos, music, sounds and other materials on this site are subject to the copyrights and other intellectual property rights of ${company.name}, its affiliated companies and its licensors.</p>
         <p>Questions about this statement, the practices of this site, or your dealings with this site can be sent to <a href="mailto:${company.email}">${company.email}</a>.</p>
       </div>
     </section>
@@ -402,7 +402,7 @@ export const pages = {
   },
 
   notFound: {
-    title: 'Page not found — Idea Technologies',
+    title: `Page not found — ${company.name}`,
     render: () => `
     ${pageHero('404', 'This page took a <span class="grad">wrong turn</span>', 'The page you’re looking for doesn’t exist or has moved.', `<div class="hero-cta left reveal"><a class="btn btn-primary" href="#/">Back to home ${icon('arrow')}</a></div>`)}
     `,
@@ -414,7 +414,7 @@ export function searchIndex() {
   return [
     ...[
       ['Home', '#/', 'Page'], ['Company', '#/company', 'Page'], ['Services', '#/services', 'Page'],
-      ['Clients', '#/clients', 'Page'], ['DIR Contract DIR-CPO-5540', 'dir/', 'Page'], ['Careers', '#/careers', 'Page'],
+      ['Clients', '#/clients', 'Page'], [`DIR Contract ${dir.contract}`, 'dir/', 'Page'], ['Careers', '#/careers', 'Page'],
       ['Contact', '#/contact', 'Page'], ['Legal disclaimer', '#/legal', 'Page'],
     ].map(([label, href, kind]) => ({ label, href, kind, icon: 'arrow' })),
     ...services.map((s) => ({ label: s.title, href: `#/services#svc-${s.id}`, kind: 'Service', icon: s.icon })),

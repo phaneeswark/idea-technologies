@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Idea Technologies — IT Services, Staffing & Consulting · Austin, TX</title>
-  <meta name="description" content="Idea Technologies is an SBA 8(a) and HUB certified IT services company in Austin, Texas offering software development, IT staffing (Texas DIR ITSAC DIR-CPO-5540), cloud transformation, mobile apps, managed services and IT project management." />
+  <title>{{name}} — IT Services, Staffing & Consulting · {{city}}, {{state}}</title>
+  <meta name="description" content="{{name}} is an {{certifiedAnd}} IT services company in {{city}}, {{stateName}} offering software development, IT staffing (Texas DIR ITSAC {{dir.contract}}), cloud transformation, mobile apps, managed services and IT project management." />
   <meta name="theme-color" content="#070B14" />
-  <meta property="og:title" content="Idea Technologies" />
+  <meta property="og:title" content="{{name}}" />
   <meta property="og:description" content="Pioneering IT excellence for government & enterprise." />
   <meta property="og:type" content="website" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -31,7 +31,7 @@
 
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#/" aria-label="Idea Technologies home">
+      <a class="brand" href="#/" aria-label="{{name}} home">
         <span class="brand-badge"><i>i</i>DEA</span>
         <span class="brand-word">Technologies</span>
       </a>
@@ -59,13 +59,13 @@
   <footer class="site-footer">
     <div class="container footer-grid">
       <div class="footer-brand">
-        <a class="brand" href="#/" aria-label="Idea Technologies home">
+        <a class="brand" href="#/" aria-label="{{name}} home">
           <span class="brand-badge"><i>i</i>DEA</span>
           <span class="brand-word">Technologies</span>
         </a>
         <p class="muted">A global technology and management firm focused on IT project development, project management and IT lifecycle management.</p>
         <div class="footer-pills">
-          <span class="pill">SBA 8(a)</span><span class="pill">HUB Certified</span><span class="pill">DIR-CPO-5540</span>
+          {{certPills}}
         </div>
       </div>
       <div>
@@ -78,8 +78,8 @@
       <div>
         <h4>Contracts</h4>
         <a href="dir/">DIR ITSAC contract</a>
-        <a href="https://dir.texas.gov/contracts/dir-cpo-5540" target="_blank" rel="noopener">DIR-CPO-5540 on DIR</a>
-        <a href="https://dir.texas.gov/cooperative-contracts" target="_blank" rel="noopener">DIR Cooperative Contracts</a>
+        <a href="{{dir.contractUrl}}" target="_blank" rel="noopener">{{dir.contract}} on DIR</a>
+        <a href="{{dir.coopUrl}}" target="_blank" rel="noopener">DIR Cooperative Contracts</a>
       </div>
       <div>
         <h4>Contact</h4>

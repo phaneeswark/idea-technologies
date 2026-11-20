@@ -32,11 +32,18 @@ function companyDetails() {
     transformIndexHtml(html) {
       return html.replace(/\{\{([\w.]+)\}\}/g, (match, key) => {
         if (key === 'jsonLd') return jsonLd;
-        // DIR page: the role list from src/data.js, one "• role" per line.
+        // DIR page: the role list, one "• role" per line.
         if (key === 'dir.rolesList') return dir.roles.map((r) => `• ${escapeHtml(r)}`).join('<br>');
-        const [source, field] = key.startsWith('dir.') ? [dir, key.slice(4)] : [company, key];
-        if (!(field in source)) throw new Error(`An HTML page uses {{${key}}}, which is not in src/data.js`);
-        return escapeHtml(source[field]);
+        // Footer badges: certifications plus the DIR contract number.
+        if (key === 'certPills') {
+          return [...company.certifications.filter((c) => / Certified$/.test(c)), dir.contract]
+            .map((c) => `<span class="pill">${escapeHtml(c)}</span>`).join('');
+        }
+        // Anything else is a path into src/data.js: {{email}}, {{dir.contract}}, {{dir.docs.0.url}} …
+        const [root, ...path] = key.startsWith('dir.') ? [dir, ...key.split('.').slice(1)] : [company, ...key.split('.')];
+        const value = path.reduce((obj, k) => (obj == null ? undefined : obj[k]), root);
+        if (value == null || typeof value === 'object') throw new Error(`An HTML page uses {{${key}}}, which is not a value in src/data.js`);
+        return escapeHtml(value);
       });
     },
   };

@@ -1,39 +1,103 @@
-// All content below comes from the current ideatechnologies.net site.
+// ═════════════════════════════════════════════════════════════════════
+//  WEBSITE SETTINGS: the one place to change company details.
+//  Edit a value between the quotes, then commit and push; the live site
+//  updates itself in about a minute. Every page, the DIR page, the footer
+//  and the search-engine info read from here.
+//
+//  Not in this file: the email addresses that receive contact form messages.
+//  They're in the Google Apps Script ("TO" at the top), at script.google.com.
+// ═════════════════════════════════════════════════════════════════════
 
-// ── Company details ──────────────────────────────────────────────
-// Edit these, then commit and push; the live site updates itself. Every page, the footer and the
-// search-engine info read from here, so this is the only place to change them.
 export const company = {
-  name: 'Idea Technologies',
-  legalName: 'IDEA Technologies LLC',
-  founded: 2009,
-  president: 'Rathiah Jammula',
-  activeContractors: '23+', // "Active contractors placed": a number, or text like '23+' (keep the quotes)
+  // Names
+  name: 'Idea Technologies',          // short name used across the site
+  legalName: 'IDEA Technologies LLC', // footer copyright and DIR page
+  president: 'Rathiah Jammula',       // Contact page and footer
 
+  // Contact
   email: 'info@ideatechnologies.net',
   phone: '+1 (512) 366-0019', // include the +1 country code
 
+  // Office address
   street: '7703 N Lamar Blvd STE 128',
   city: 'Austin',
-  state: 'TX',
+  state: 'TX',        // short form, used in the address
   zip: '78752',
+  stateName: 'Texas', // long form, used in sentences ("based in Austin, Texas")
 
+  // Facts and figures
+  founded: 2009,
+  activeContractors: '23+', // a number, or text like '23+' (keep the quotes)
+  presence: 'the United States and India', // "a strong presence in …"
+  presenceShort: 'US & India',            // homepage card title "… Presence"
   certifications: ['SBA 8(a) Certified', 'HUB Certified', 'Texas DIR Vendor'],
 
-  // Contact form: messages are emailed from your Google Workspace account by a small
-  // Google Apps Script (see "Contact form" in README.md). Paste the script's web app URL
-  // (it ends in /exec) between the quotes. Leave it empty and the form falls back to
-  // opening the visitor's email app.
+  // Contact form: the Google Apps Script web app URL (ends in /exec). Leave it empty
+  // and the form falls back to opening the visitor's email app.
   formEndpoint: 'https://script.google.com/macros/s/AKfycbxgx126TMDfdBSdCC092yR7oDxUDYBSVn2faKfL_FpNdrWWVkp5ASzd8SsyKIDhan0/exec',
 };
 
-// Worked out from the details above. No need to edit.
+// Texas DIR contract (DIR page, homepage, footer).
+export const dir = {
+  contract: 'DIR-CPO-5540',
+  contact: 'Rathu Jammula', // name under "please contact" on the DIR page
+  contractUrl: 'https://dir.texas.gov/contracts/dir-cpo-5540',
+  programUrl: 'http://dir.texas.gov/View-Contracts-And-Services/Pages/Content.aspx?id=13',
+  coopUrl: 'https://dir.texas.gov/cooperative-contracts',
+  // IT roles offered under the contract (DIR page list and site search).
+  roles: [
+    'Applications Architect',
+    'Business Analyst',
+    'Data Analyst / Data Architect',
+    'Database Administrator',
+    'DevOps Engineer',
+    'Developer / Programmer Analyst',
+    'Enterprise Architect',
+    'Network Engineer / Administrator',
+    'Project Manager',
+    'Quality Assurance / Test Engineer',
+    'Security Analyst',
+    'Systems Analyst',
+    'Technical Support Specialist',
+    'Web Developer / Web Designer',
+  ],
+
+  // Contract documents. Order matters: D, B, C (as listed on the DIR page).
+  docs: [
+    {
+      title: 'Appendix D — IT Staffing Services Titles & Descriptions',
+      note: 'Per Amendment 1',
+      url: 'https://txdir.widen.net/view/pdf/dwzbheejoi/DIR-CPO-5540-Appendix-D-ITSAC-Job-Category-Title-Descriptions-per-Amendment-1.pdf',
+    },
+    {
+      title: 'Appendix B — HUB Subcontracting Plan',
+      note: 'In place of List of Subcontractors',
+      url: 'https://txdir.widen.net/view/pdf/axeeqxbtog/DIR-CPO-5540-Appendix-B-HUB-Subcontracting-Plan.pdf?t.download=true&u=tmwul0',
+    },
+    {
+      title: 'Appendix C — Not To Exceed (NTE) Rates',
+      note: 'Contract pricing',
+      url: 'https://txdir.widen.net/view/pdf/cfd8rpo1yq/DIR-CPO-5540-Appendix-C-ITSAC-Not-To-Exceed-Rates.pdf?t.download=true&u=tmwul0',
+    },
+  ],
+
+};
+
+// ── Worked out from the settings above. No need to edit. ──
 company.address = `${company.street}, ${company.city}, ${company.state} ${company.zip}`;
 company.mapQuery = company.address;
 company.phoneHref = `tel:+${company.phone.replace(/\D/g, '')}`;
+// "SBA 8(a) and HUB Certified": the certifications that end in "Certified", combined.
+const certified = company.certifications.filter((c) => / Certified$/.test(c)).map((c) => c.replace(/ Certified$/, ''));
+company.certifiedAnd = certified.length ? `${certified.join(' and ')} Certified` : '';
+company.certifiedAmp = certified.length ? `${certified.join(' & ')} Certified` : '';
+
+// ═════════════════════════════════════════════════════════════════════
+//  PAGE CONTENT: services, clients, logos and other text.
+// ═════════════════════════════════════════════════════════════════════
 
 export const intro = [
-  'Idea Technologies is a renowned global technology and management firm at the forefront of IT innovation. With a laser focus on IT project development, project management, and IT lifecycle management, we offer cutting-edge software solutions, robust technical support, and comprehensive staffing and consulting services.',
+  `${company.name} is a renowned global technology and management firm at the forefront of IT innovation. With a laser focus on IT project development, project management, and IT lifecycle management, we offer cutting-edge software solutions, robust technical support, and comprehensive staffing and consulting services.`,
   'We offer a wide range of Software and Application Development, IT Infrastructure, Database support, Management and IT Consulting services to State and Local Government and Private/Public Enterprises with cutting-edge technology solutions.',
 ];
 
@@ -43,7 +107,7 @@ export const services = [
     icon: 'users',
     title: 'Staffing Solutions',
     short: 'One of the most dependable IT staffing companies, built on customer satisfaction and deep market specialization.',
-    long: 'Our unwavering commitment to customer satisfaction, combined with our specialization in the industry and market, has positioned us as one of the most dependable IT staffing companies. Through the Texas DIR ITSAC contract (DIR-CPO-5540) we place qualified IT professionals with state agencies, local governments and private organizations.',
+    long: `Our unwavering commitment to customer satisfaction, combined with our specialization in the industry and market, has positioned us as one of the most dependable IT staffing companies. Through the Texas DIR ITSAC contract (${dir.contract}) we place qualified IT professionals with state agencies, local governments and private organizations.`,
     points: ['DIR ITSAC approved vendor', 'Hourly staff augmentation', '14+ IT role categories', 'Rapid placement'],
   },
   {
@@ -59,7 +123,7 @@ export const services = [
     icon: 'cloud',
     title: 'Cloud Transformation',
     short: 'Top-tier security, enterprise-level scalability and open innovation for agility and uninterrupted operations.',
-    long: 'Partnering with Idea Technologies, Cloud brings together top-tier security, enterprise-level scalability, and open innovation to enhance agility and ensure uninterrupted operations. We plan, migrate and manage workloads so your teams can move faster with less risk.',
+    long: `Partnering with ${company.name}, Cloud brings together top-tier security, enterprise-level scalability, and open innovation to enhance agility and ensure uninterrupted operations. We plan, migrate and manage workloads so your teams can move faster with less risk.`,
     points: ['Migration planning', 'Security-first architecture', 'Scalable infrastructure', 'Continuous operations'],
   },
   {
@@ -139,46 +203,6 @@ export const clientLogos = [
   { file: 'clients/tpwd.png', name: 'Texas Parks & Wildlife' },
 ];
 
-export const dir = {
-  contract: 'DIR-CPO-5540',
-  contractUrl: 'https://dir.texas.gov/contracts/dir-cpo-5540',
-  programUrl: 'http://dir.texas.gov/View-Contracts-And-Services/Pages/Content.aspx?id=13',
-  coopUrl: 'https://dir.texas.gov/cooperative-contracts',
-  contact: 'Rathu Jammula',
-  roles: [
-    'Applications Architect',
-    'Business Analyst',
-    'Data Analyst / Data Architect',
-    'Database Administrator',
-    'DevOps Engineer',
-    'Developer / Programmer Analyst',
-    'Enterprise Architect',
-    'Network Engineer / Administrator',
-    'Project Manager',
-    'Quality Assurance / Test Engineer',
-    'Security Analyst',
-    'Systems Analyst',
-    'Technical Support Specialist',
-    'Web Developer / Web Designer',
-  ],
-  docs: [
-    {
-      title: 'Appendix D — IT Staffing Services Titles & Descriptions',
-      note: 'Per Amendment 1',
-      url: 'https://txdir.widen.net/view/pdf/dwzbheejoi/DIR-CPO-5540-Appendix-D-ITSAC-Job-Category-Title-Descriptions-per-Amendment-1.pdf',
-    },
-    {
-      title: 'Appendix B — HUB Subcontracting Plan',
-      note: 'In place of List of Subcontractors',
-      url: 'https://txdir.widen.net/view/pdf/axeeqxbtog/DIR-CPO-5540-Appendix-B-HUB-Subcontracting-Plan.pdf?t.download=true&u=tmwul0',
-    },
-    {
-      title: 'Appendix C — Not To Exceed (NTE) Rates',
-      note: 'Contract pricing',
-      url: 'https://txdir.widen.net/view/pdf/cfd8rpo1yq/DIR-CPO-5540-Appendix-C-ITSAC-Not-To-Exceed-Rates.pdf?t.download=true&u=tmwul0',
-    },
-  ],
-};
 
 export const expertise = [
   'Java EE', '.NET', 'EAI', 'IBM Mainframe', 'Oracle', 'C / C++', 'Web Services', 'CORBA',

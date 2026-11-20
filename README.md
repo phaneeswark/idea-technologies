@@ -61,11 +61,26 @@ The second command prints a public `https://….trycloudflare.com` link. It work
 
 ## Where to edit
 
-- Company details (phone, email, address, president, contractor count): the `company` section at the top of `src/data.js`. This is the only place to change them; the pages, footer and search-engine info all read from it.
-- Other text and data (services, clients, logos, DIR roles): `src/data.js`
-- Page layouts: `src/pages.js`
+**Company details: one place.** Open `src/data.js`. The "WEBSITE SETTINGS" section at the top holds everything that changes:
+
+| Setting | Examples |
+|---|---|
+| Names | company name, legal name, president, DIR contact name |
+| Contact | email, phone |
+| Address | street, city, state, ZIP |
+| Facts | year founded, active contractors, certifications, US & India presence |
+| DIR contract | contract number, DIR web links, appendix PDF links, IT roles |
+| Contact form | the Google Apps Script URL |
+
+Every page reads from these settings: the main site, the DIR page, the footer, page titles and the search-engine info. Change a value, commit and push, and it updates everywhere.
+
+The one exception is where contact form messages are delivered (info@ and itsac@). That list lives in the Google Apps Script (`TO` at the top), at script.google.com.
+
+Other things:
+- Services, clients, client logos and other text: further down in `src/data.js`
+- Page layouts: `src/pages.js` (main site), `dir/index.html` (DIR page)
 - 3D logo: `src/logo3d.js`
-- Styles and colors: `src/styles.css` (the tokens at the top)
+- Styles and colours: `src/styles.css` (the tokens at the top), `dir/dir.css`
 
 ## Contact form
 
